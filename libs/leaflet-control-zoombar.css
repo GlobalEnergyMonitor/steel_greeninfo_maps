@@ -1,0 +1,7 @@
+.gin-control-zoom {
+}
+
+.gin-control-zoom-in, .gin-control-zoom-out {
+	font-size: 22px;
+	font: bold 18px 'Lucida Console', Monaco, monospace;
+}

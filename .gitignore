@@ -1,0 +1,6 @@
+*.lock
+.DS*
+.~lock*
+yarn-error.log
+*.xlsx
+node_modules/
