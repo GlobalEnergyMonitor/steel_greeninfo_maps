@@ -24,12 +24,9 @@ CONFIG.default_basemap = 'basemap';
 CONFIG.default_title = 'Worldwide';
 
 // default tilte for the thing we are mapping
-// CONFIG.fossil_name = 'iron/steel plant';
-// CONFIG.fossil_name2 = 'iron/steel plant capacity reduction';
-// CONFIG.fossil_name3 = 'iron/steel plant capacity addition';
-CONFIG.fossil_name = 'iron/steel phase';
-CONFIG.fossil_name2 = 'iron/steel phase capacity reduction';
-CONFIG.fossil_name3 = 'iron/steel phase capacity addition';
+CONFIG.fossil_name = 'iron/steel plant';
+CONFIG.fossil_name2 = 'iron/steel plant capacity reduction';
+CONFIG.fossil_name3 = 'iron/steel plant capacity addition';
 
 // outerring, used for constructing the mask, see drawCountry();
 CONFIG.outerring = [[-90,-360],[-90,360],[90,360],[90,-360],[-90,-360]];
