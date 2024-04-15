@@ -51,6 +51,7 @@ CONFIG.country_no_style = { opacity: 0, fillOpacity: 0 };
 CONFIG.attributes = {
   'id': {name: 'ID', format: 'string', classname: 'pid', table: false},
   'project': {name: 'Plant Name (English)', format: 'string', classname: 'project', table: true},
+  'plant_phase': {name: 'Plant Phase', format: 'string', classname: 'plant_phase', table: true},
   'project_other': {name: 'Plant Name (other language)', format: 'string', classname: 'project_other', table: true},
   'parent': {name: 'Parent', format: 'string', classname: 'parent', table: true},
   'owner': {name: 'Owner', format: 'string', classname: 'owner', table: true},
@@ -103,7 +104,7 @@ CONFIG.status_types = {
   'mothballed': {text: 'Mothballed'}, 
   'retired': {text: 'Retired'}, 
   'cancelled': {text: 'Cancelled'}, 
-  'operating pre-retirement': {text: 'Operating pre-retirement'},
+  'operating_pre-retirement': {text: 'Operating pre-retirement'},
 };
 
 
@@ -122,7 +123,7 @@ CONFIG.ch_provinces = ['Anhui','Beijing','Chongqing','Fujian','Gansu','Guangdong
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function () {
   // data initialization first, then the remaining init steps
-  Promise.all([initData('./data/data.csv'), initData('./data/countries.json')])
+  Promise.all([initData('./data/map_file_gspt2024-04-15.csv'), initData('./data/countries.json')])
     .then(function(data) {
       initDataFormat(data)    // get data ready for use
       initButtons();          // init button listeners
@@ -1297,7 +1298,7 @@ function updateResultsPanel(data, country=CONFIG.default_title) {
   var total1 = 0;
   var total2 = 0;
   var total3 = 0;
-  var statuses1 = ['cancelled', 'mothballed', 'retired', 'operating pre-retirement'];
+  var statuses1 = ['cancelled', 'mothballed', 'retired', 'operating_pre-retirement'];
   var statuses2 = ['announced', 'construction', 'operating'];
   Object.keys(CONFIG.process_types).forEach(function(proci) {
     var count = 0;
@@ -1307,10 +1308,12 @@ function updateResultsPanel(data, country=CONFIG.default_title) {
       if ( d.properties.process == proci ) count += 1;
 
       // tally the "other" totals
-      if ( d.properties.process == proci && d.properties.id.indexOf('-') == -1 ) total1 += 1;
-      if ( d.properties.process == proci && d.properties.id.indexOf('-') > -1 && statuses1.indexOf(d.properties.status) > -1 ) total2 += 1;
-      if ( d.properties.process == proci && d.properties.id.indexOf('-') > -1 && statuses2.indexOf(d.properties.status) > -1 ) total3 += 1;
-
+      // if ( d.properties.process == proci && d.properties.id.indexOf('-') == -1 ) total1 += 1;
+      // if ( d.properties.process == proci && d.properties.id.indexOf('-') > -1 && statuses1.indexOf(d.properties.status) > -1 ) total2 += 1;
+      // if ( d.properties.process == proci && d.properties.id.indexOf('-') > -1 && statuses2.indexOf(d.properties.status) > -1 ) total3 += 1;
+      if ( d.properties.process == proci && d.properties.plant_phase == 'Main plant' ) total1 += 1;
+      if ( d.properties.process == proci && d.properties.plant_phase == 'Closure' ) total2 += 1;
+      if ( d.properties.process == proci && d.properties.plant_phase == 'Expansion' ) total3 += 1;
     });
     // format label for type(s) and add to results
     // show a count for all types, whether 0 or >0
